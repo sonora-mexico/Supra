@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Super7 ULTRA</title>
+
+<script src="https://unpkg.com/html5-qrcode"></script>
+
+<style>
+
+body{
+font-family:Arial;
+background:#0f172a;
+color:white;
+text-align:center;
+margin:0;
+}
+
+header{
+background:#020617;
+padding:15px;
+font-size:20px;
+}
+
+.card{
+background:#1e293b;
+margin:15px;
+padding:15px;
+border-radius:10px;
+}
+
+input{
+padding:10px;
+width:70%;
+border-radius:8px;
+border:none;
+}
+
+button{
+padding:10px 15px;
+border:none;
+border-radius:8px;
+background:#22c55e;
+color:white;
+margin-top:10px;
+}
+
+#reader{
+width:300px;
+margin:auto;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+Super7 ULTRA | @germanvale
+</header>
+
+<div id="login" class="card">
+
+<h3>Clave de acceso</h3>
+
+<input id="pass">
+
+<br>
+
+<button onclick="login()">Entrar</button>
+
+</div>
+
+<div id="app" style="display:none">
+
+<div class="card">
+
+<h3>Buscar producto</h3>
+
+<input id="search">
+
+<br>
+
+<button onclick="buscar()">Buscar</button>
+
+</div>
+
+<div class="card">
+
+<h3>Escáner</h3>
+
+<button onclick="iniciarCamara()">Abrir cámara</button>
+
+<div id="reader"></div>
+
+</div>
+
+<div class="card" id="resultado">
+
+Esperando producto...
+
+</div>
+
+</div>
+
+<script>
+
+function login(){
+
+let p=document.getElementById("pass").value;
+
+if(p=="@germanvale"){
+
+document.getElementById("login").style.display="none";
+document.getElementById("app").style.display="block";
+
+}else{
+
+alert("Clave incorrecta")
+
+}
+
+}
+
+function mostrar(nombre){
+
+let w=Math.floor(Math.random()*4000)+800
+let a=w+200
+let m=w-150
+
+let barato=Math.min(w,a,m)
+
+document.getElementById("resultado").innerHTML=`
+
+<h2>${nombre}</h2>
+
+Walmart: $${w}<br>
+Amazon: $${a}<br>
+MercadoLibre: $${m}
+
+<br><br>
+
+Más barato: $${barato}
+
+`;
+
+}
+
+function buscar(){
+
+let q=document.getElementById("search").value;
+
+mostrar(q)
+
+}
+
+function iniciarCamara(){
+
+let scanner=new Html5QrcodeScanner(
+"reader",
+{fps:10,qrbox:250}
+)
+
+scanner.render((txt)=>{
+
+mostrar("Código "+txt)
+
+})
+
+}
+
+</script>
+
+</body>
+</html>
